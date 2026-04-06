@@ -7,6 +7,10 @@ import {
   UpdateSessionInput,
   ListSessionsInput,
 } from "./studySessions.schemas";
+import {
+  deleteFromCloudinary,
+  uploadToCloudinary,
+} from "../../middlewares/upload.middleware";
 
 export async function createSession(userId: string, data: CreateSessionInput) {
   await assertSubjectOwnership(userId, data.subjectId);
@@ -141,11 +145,11 @@ async function assertSubjectOwnership(userId: string, subjectId: string) {
 export async function addPhoto(
   userId: string,
   sessionId: string,
-  filename: string,
+  buffer: Buffer,
 ) {
   await assertOwnership(userId, sessionId);
 
-  const imageUrl = `/uploads/${filename}`;
+  const imageUrl = await uploadToCloudinary(buffer, "studyrats/sessions");
 
   return prisma.studySessionPhoto.create({
     data: { studySessionId: sessionId, imageUrl },
@@ -169,10 +173,6 @@ export async function deletePhoto(
   if (photo.studySessionId !== sessionId)
     throw new AppError("Sem permissão", 403);
 
-  const filename = path.basename(photo.imageUrl);
-  const filepath = path.resolve("uploads", filename);
-
-  await fs.unlink(filepath).catch(() => null);
-
+  await deleteFromCloudinary(photo.imageUrl);
   await prisma.studySessionPhoto.delete({ where: { id: photoId } });
 }

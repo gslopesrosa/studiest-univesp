@@ -73,7 +73,7 @@ export async function uploadPhoto(
     const photo = await sessionsService.addPhoto(
       req.userId!,
       req.params.id as string,
-      req.file.filename,
+      req.file.buffer, // ← buffer direto da memória
     );
     res.status(201).json(photo);
   } catch (err) {
