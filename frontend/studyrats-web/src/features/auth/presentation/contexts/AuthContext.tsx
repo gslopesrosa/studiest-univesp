@@ -16,12 +16,11 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true) // 👈 novo
+  const [loading, setLoading] = useState(true)
 
   const authApi = new AuthApi()
   const loginUser = new LoginUser(authApi)
 
-  // 🔥 NOVO: recuperar usuário ao iniciar app
   useEffect(() => {
     async function loadUser() {
       const token = tokenStorage.get()
@@ -65,7 +64,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isAuthenticated: !!user,
       }}
     >
-      {!loading && children} {/* 👈 evita bug de render */}
+      {!loading && children}
     </AuthContext.Provider>
   )
 }

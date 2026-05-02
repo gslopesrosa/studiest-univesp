@@ -35,8 +35,8 @@ export function useLogin() {
     } catch {
       setError('Erro ao fazer login')
     } finally {
-    setLoading(false)
-  }
+      setLoading(false)
+    }
   }
 
   return {

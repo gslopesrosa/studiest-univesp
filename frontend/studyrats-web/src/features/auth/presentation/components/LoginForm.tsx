@@ -24,7 +24,6 @@ export function LoginForm() {
           disabled={loading}
         />
       </FormField>
-
       <FormField label="Senha">
         <Input
           type="password"
