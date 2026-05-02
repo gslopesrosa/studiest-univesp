@@ -1,4 +1,5 @@
 import { useRegister } from '../hooks/useRegister'
+import { Button } from './Button'
 import { FormField } from './FormField'
 import { Input } from './Input'
 
@@ -8,6 +9,7 @@ export function RegisterForm() {
     email,
     password,
     error,
+    loading,
     setName,
     setEmail,
     setPassword,
@@ -30,14 +32,16 @@ export function RegisterForm() {
           onChange={(e) => setEmail(e.target.value)}
         />
       </FormField>
-      <FormField label="password">
+      <FormField label="Senha">
         <Input
           type="Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
       </FormField>
-      <button type="submit">Cadastrar</button>
+      <Button type="submit" loading={loading}>
+        Cadastrar
+      </Button>
       {error && <p>{error}</p>}
     </form>
   )

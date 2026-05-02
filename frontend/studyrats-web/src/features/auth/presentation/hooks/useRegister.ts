@@ -14,15 +14,18 @@ export function useRegister() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError('')
+    setLoading(true)
 
     const result = registerSchema.safeParse({ name, email, password })
 
     if (!result.success) {
       setError(result.error.issues[0]?.message || 'Erro de validação')
+      setLoading(false)
       return
     }
 
@@ -34,6 +37,8 @@ export function useRegister() {
       navigate('/')
     } catch {
       setError('Erro ao cadastrar')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -42,6 +47,7 @@ export function useRegister() {
     email,
     password,
     error,
+    loading,
     setName,
     setEmail,
     setPassword,

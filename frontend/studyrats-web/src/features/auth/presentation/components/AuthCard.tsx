@@ -5,30 +5,21 @@ interface AuthCardProps {
 
 export function AuthCard({ title, children }: AuthCardProps) {
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: '#f5f5f5',
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}>
+      <div style={{
+        width: 400,
+        padding: 24,
+        borderRadius: 12,
+        background: '#1e293b',
+        boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
         textAlign: 'center'
-      }}
-    >
-      <div
-        style={{
-          width: 400,
-          padding: 24,
-          borderRadius: 8,
-          background: '#fff',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 12
-        }}
-      >
-        <h2 style={{ marginBottom: 16 }}>{title}</h2>
-
+      }}>
+        <h2 style={{ color: '#f97316' }}>{title}</h2>
         {children}
       </div>
     </div>
