@@ -1,46 +1,25 @@
-import { tokenStorage } from '@/shared/infrastructure/storage/tokenStorage'
+import { api } from '@/shared/infrastructure/api/httpClient'
 
 export class DashboardApi {
-  private baseUrl = 'http://localhost:3333'
-
-  private getHeaders() {
-    const token = tokenStorage.get()
-
-    return {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    }
-  }
-
   async getStreak() {
-    const res = await fetch(`${this.baseUrl}/dashboard/streak`, {
-      headers: this.getHeaders(),
-    })
-    return res.json()
+    const { data } = await api.get('/dashboard/streak')
+    return data
   }
 
   async getSummary() {
-    const res = await fetch(`${this.baseUrl}/dashboard/summary`, {
-      headers: this.getHeaders(),
-    })
-    return res.json()
+    const { data } = await api.get('/dashboard/summary')
+    return data
   }
 
   async getCalendar(month: number, year: number) {
-    const res = await fetch(
-      `${this.baseUrl}/dashboard/calendar?year=${year}&month=${month}`,
-      {
-        headers: this.getHeaders(),
-      }
-    )
-
-    return res.json()
+    const { data } = await api.get('/dashboard/calendar', {
+      params: { month, year },
+    })
+    return data
   }
 
   async getRanking() {
-    const res = await fetch(`${this.baseUrl}/dashboard/subjects-ranking`, {
-      headers: this.getHeaders(),
-    })
-    return res.json()
+    const { data } = await api.get('/dashboard/subjects-ranking')
+    return data
   }
 }
