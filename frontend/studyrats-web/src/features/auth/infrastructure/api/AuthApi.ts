@@ -1,5 +1,5 @@
+import { tokenStorage } from '@/shared/infrastructure/storage/tokenStorage'
 import { AuthRepository } from '../../application/protocols/AuthRepository'
-import { User } from '../../domain/entities/User'
 import { LoginParams } from '../../domain/types/LoginParams'
 import { LoginResponse } from '../../domain/types/LoginResponse'
 import { RegisterParams } from '../../domain/types/RegisterParams'
@@ -48,8 +48,8 @@ export class AuthApi implements AuthRepository {
     }
   }
 
-  async getMe(): Promise<User> {
-    const token = localStorage.getItem('auth_token')
+  async getMe() {
+    const token = tokenStorage.get()
 
     const response = await fetch('http://localhost:3333/auth/me', {
       headers: {

@@ -1,12 +1,19 @@
 import { api } from '@/shared/infrastructure/api/httpClient'
 
 export class StudySessionApi {
-  async create(data: {
+   async create(data: {
     subjectId: string
-    totalMinutes: number
-    date: string
+    studyDate: string
+    durationMinutes: number
+    description: string
+    didExercises: boolean
+    exerciseCount: number
   }) {
-    const { data: response } = await api.post('/study-sessions', data)
+    const { data: response } = await api.post(
+      '/study-sessions',
+      data
+    )
+
     return response
   }
 

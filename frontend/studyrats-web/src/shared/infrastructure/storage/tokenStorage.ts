@@ -1,15 +1,15 @@
-const TOKEN_KEY = 'auth_token'
+const KEY = 'studyrats:token'
 
 export const tokenStorage = {
   get() {
-    return localStorage.getItem(TOKEN_KEY)
+    return localStorage.getItem(KEY)
   },
 
   set(token: string) {
-    localStorage.setItem(TOKEN_KEY, token)
+    localStorage.setItem(KEY, token)
   },
 
   remove() {
-    localStorage.removeItem(TOKEN_KEY)
+    localStorage.removeItem(KEY)
   },
 }

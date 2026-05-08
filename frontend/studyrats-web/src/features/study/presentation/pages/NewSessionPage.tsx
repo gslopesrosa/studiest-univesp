@@ -33,8 +33,6 @@ export function NewSessionPage() {
 
   return (
     <div style={{ padding: 24 }}>
-      <h2 style={{ marginBottom: 16 }}>📚 Nova Sessão</h2>
-
       <SessionForm
         subjects={subjects}
         onSubmit={handleSubmit}
