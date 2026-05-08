@@ -1,40 +1,54 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
+
+import { tokenStorage } from '@/shared/infrastructure/storage/tokenStorage'
+import { AuthApi } from '@/features/auth/infrastructure/api/AuthApi'
 import { LoginParams } from '../../domain/types/LoginParams'
 import { User } from '../../domain/entities/User'
-import { LoginUser } from '../../application/usecases/LoginUser'
-import { AuthApi } from '../../infrastructure/api/AuthApi'
-import { tokenStorage } from '@/shared/infrastructure/storage/tokenStorage'
+
+const authApi = new AuthApi()
+
 
 interface AuthContextData {
   user: User | null
+  token: string | null
+  loading: boolean
+  isAuthenticated: boolean
   login: (params: LoginParams) => Promise<void>
   logout: () => void
-  isAuthenticated: boolean
 }
 
-const AuthContext = createContext<AuthContextData>({} as AuthContextData)
+const AuthContext = createContext({} as AuthContextData)
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export function AuthProvider({ children }: any) {
   const [user, setUser] = useState<User | null>(null)
+  const [token, setToken] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
-
-  const authApi = new AuthApi()
-  const loginUser = new LoginUser(authApi)
 
   useEffect(() => {
     async function loadUser() {
-      const token = tokenStorage.get()
+      const storedToken = tokenStorage.get()
 
-      if (!token) {
+      if (!storedToken) {
         setLoading(false)
         return
       }
 
       try {
+        setToken(storedToken)
+
         const user = await authApi.getMe()
         setUser(user)
-      } catch {
+      } catch (error) {
+        console.error('Erro ao carregar usuário:', error)
+
         tokenStorage.remove()
+        setToken(null)
+        setUser(null)
       } finally {
         setLoading(false)
       }
@@ -44,14 +58,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   async function login(params: LoginParams) {
-    const response = await loginUser.execute(params)
+    const response = await authApi.login(params)
 
     tokenStorage.set(response.token)
+
+    setToken(response.token)
     setUser(response.user)
   }
 
   function logout() {
     tokenStorage.remove()
+    setToken(null)
     setUser(null)
   }
 
@@ -59,22 +76,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     <AuthContext.Provider
       value={{
         user,
+        token,
+        loading,
+        isAuthenticated: !!token,
         login,
         logout,
-        isAuthenticated: !!user,
       }}
     >
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   )
 }
 
 export function useAuth() {
-  const context = useContext(AuthContext)
-
-  if (!context) {
-    throw new Error('useAuth must be used within AuthProvider')
-  }
-
-  return context
+  return useContext(AuthContext)
 }

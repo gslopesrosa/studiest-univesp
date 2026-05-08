@@ -61,9 +61,33 @@ export function Sidebar() {
         </nav>
       </div>
       <div>
-        <button onClick={handleLogout} style={logoutStyle}>
+         <button
+          onClick={handleLogout}
+          style={{
+            width: '100%',
+            padding: '10px 12px',
+            borderRadius: 8,
+            border: '1px solid #1e293b',
+            background: 'transparent',
+            color: '#94a3b8',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 8,
+            transition: '0.2s',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = '#1e293b'
+            e.currentTarget.style.color = 'white'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'transparent'
+            e.currentTarget.style.color = '#94a3b8'
+          }}
+        >
           Sair
-        </button>
+      </button>
       </div>
     </aside>
   )

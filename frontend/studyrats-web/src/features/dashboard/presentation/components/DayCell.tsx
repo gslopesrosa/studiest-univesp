@@ -5,7 +5,7 @@ interface Props {
 }
 
 export function DayCell({ day }: Props) {
-  const [, , dayNumber] = day.date.split('T')[0].split('-')
+  const dayNumber = Number(day.date.split('-')[2])
 
   const studied = day.studied
 
@@ -13,13 +13,15 @@ export function DayCell({ day }: Props) {
     <div
       title={`${day.date} - ${day.totalMinutes} min`}
       style={{
-        aspectRatio: '1 / 1',
-        borderRadius: 8,
+        height: 52,
+        borderRadius: 10,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         background: studied ? '#1e293b' : '#020617',
-        border: studied ? '1px solid #f97316' : '1px solid #1e293b',
+        border: studied
+          ? '1px solid #f97316'
+          : '1px solid #1e293b',
         color: studied ? 'white' : '#475569',
         transition: '0.2s',
       }}
@@ -30,16 +32,36 @@ export function DayCell({ day }: Props) {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            justifyContent: 'center',
             lineHeight: 1,
+            gap: 2,
           }}
         >
-          <span style={{ fontSize: 10, opacity: 0.7 }}>
+          <span
+            style={{
+              fontSize: 10,
+              opacity: 0.7,
+            }}
+          >
             {dayNumber}
           </span>
-          <span style={{ fontSize: 16 }}>📚</span>
+
+          <span
+            style={{
+              fontSize: 12,
+            }}
+          >
+            📚
+          </span>
         </div>
       ) : (
-        <span>{dayNumber}</span>
+        <span
+          style={{
+            fontSize: 14,
+          }}
+        >
+          {dayNumber}
+        </span>
       )}
     </div>
   )
