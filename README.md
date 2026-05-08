@@ -245,3 +245,102 @@ src/
 | `CLOUDINARY_CLOUD_NAME` | Cloud name do Cloudinary         | Sim         |
 | `CLOUDINARY_API_KEY`    | API key do Cloudinary            | Sim         |
 | `CLOUDINARY_API_SECRET` | API secret do Cloudinary         | Sim         |
+
+---
+# Frontend
+
+Interface web da aplicação responsável pela visualização e registro das sessões de estudo.
+
+---
+
+### Stack
+
+* React + TypeScript
+* Vite
+* React Router DOM
+* Context API (Auth)
+* Fetch API
+* CSS customizado (dark theme)
+
+---
+
+### Funcionalidades
+
+* Autenticação (login e registro)
+* Dashboard com:
+
+  *  Streak de estudos
+  *  Resumo semanal/mensal
+  *  Ranking de disciplinas
+  *  Calendário
+* Gerenciamento de disciplinas
+* Registro de sessões de estudo
+* Layout com menu lateral
+
+---
+
+###  Instalação e execução
+
+1. Clone o repositório:
+
+```bash
+git clone https://github.com/jplimam/studiest-univesp.git
+```
+```bash
+cd studiest-univesp/frontend
+```
+
+2. Instale as dependências:
+
+```bash
+npm install
+```
+
+3. Configure as variáveis de ambiente:
+
+Crie um arquivo `.env` na raiz do frontend:
+
+```env
+VITE_API_URL=http://localhost:3333
+```
+
+4. Execute o projeto:
+
+```bash
+npm run dev
+```
+
+---
+
+### Acesso
+
+A aplicação estará disponível em:
+
+```
+http://localhost:5173
+```
+
+---
+
+### Estrutura do projeto
+
+```
+src/
+  features/      # Funcionalidades organizadas por domínio
+  main/          # Layout, rotas e estrutura principal
+  shared/        # Componentes e utilitários reutilizáveis
+  main.tsx       # Entry point da aplicação
+```
+
+---
+
+### Observações
+
+* O frontend depende do backend rodando em:
+
+```
+http://localhost:3333
+```
+
+* Certifique-se de iniciar o backend antes de rodar o frontend
+
