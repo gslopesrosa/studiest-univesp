@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { registerHandler, loginHandler, meHandler } from "./auth.controller";
+import { registerHandler, loginHandler, meHandler, updateMeHandler, uploadAvatarHandler } from "./auth.controller";
 import { authMiddleware } from "../../middlewares/auth.middleware";
+import { upload } from "../../middlewares/upload.middleware";
 
 const router = Router();
 
@@ -115,5 +116,60 @@ router.post("/login", loginHandler);
  *         description: Token inválido
  */
 router.get("/me", authMiddleware, meHandler);
+
+/**
+ * @swagger
+ * /auth/me:
+ *   put:
+ *     summary: Atualiza dados do usuário autenticado
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Usuário atualizado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       401:
+ *         description: Token inválido
+ */
+router.put("/me", authMiddleware, updateMeHandler);
+
+/**
+ * @swagger
+ * /auth/avatar:
+ *   post:
+ *     summary: Upload do avatar do usuário
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               avatar:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       200:
+ *         description: Avatar atualizado
+ */
+router.post("/avatar", authMiddleware, upload.single("avatar"), uploadAvatarHandler);
 
 export { router as authRoutes };
