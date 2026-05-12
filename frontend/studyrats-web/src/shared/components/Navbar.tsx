@@ -42,7 +42,7 @@ export function Navbar() {
           Disciplinas
         </NavLink>
 
-        <NavLink to="/sessions/new" style={ctaStyle}>
+        <NavLink to="/sessions-new" style={ctaStyle}>
           + Nova Sessão
         </NavLink>
       </nav>
