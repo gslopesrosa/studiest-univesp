@@ -60,7 +60,7 @@ export function Sidebar() {
             📝 Registros
           </NavLink>
 
-          <NavLink to="/sessions/new" style={ctaStyle}>
+          <NavLink to="/sessions-new" style={ctaStyle}>
             ➕ Nova Sessão
           </NavLink>
         </nav>

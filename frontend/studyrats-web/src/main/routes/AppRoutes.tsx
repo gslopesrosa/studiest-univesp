@@ -27,7 +27,7 @@ export function AppRoutes() {
       >
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/subjects" element={<SubjectsPage />} />
-        <Route path="/sessions/new" element={<NewSessionPage />} />
+        <Route path="/sessions-new" element={<NewSessionPage />} />
         <Route path="/sessions/:id/photo" element={<UploadSessionPhotoPage />}/>
         <Route path="/sessions" element={<SessionsPage/>}/>
         <Route path="/profile" element={<ProfilePage />}/>
