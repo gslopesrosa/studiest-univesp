@@ -6,8 +6,12 @@ import { DashboardPage } from '@/features/dashboard/presentation/pages/Dashboard
 import { SubjectsPage } from '@/features/subjects/presentation/pages/SubjectsPage'
 import { NewSessionPage } from '@/features/study/presentation/pages/NewSessionPage'
 
+
 import { PrivateRoute } from './PrivateRoute'
 import { AppLayout } from '@/shared/layouts/AppLayout'
+import { UploadSessionPhotoPage } from '@/features/study/presentation/pages/UploadSessionPhotoPage'
+import { SessionsPage } from '@/features/study/presentation/pages/SessionsPage'
+import { ProfilePage } from '@/features/profile/presentation/pages/ProfilePage'
 
 export function AppRoutes() {
   return (
@@ -24,6 +28,9 @@ export function AppRoutes() {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/subjects" element={<SubjectsPage />} />
         <Route path="/sessions/new" element={<NewSessionPage />} />
+        <Route path="/sessions/:id/photo" element={<UploadSessionPhotoPage />}/>
+        <Route path="/sessions" element={<SessionsPage/>}/>
+        <Route path="/profile" element={<ProfilePage />}/>
       </Route>
     </Routes>
   )

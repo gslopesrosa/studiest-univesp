@@ -63,17 +63,99 @@ export async function login(data: LoginInput) {
 
 export async function me(userId: string) {
   const user = await prisma.user.findUnique({
-    where: { id: userId },
+    where: { id: userId  },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      createdAt: true,
+      avatarUrl: true,
+
+      subjects: {
+        select: {
+          id: true,
+        },
+      },
+
+      studySessions: {
+        select: {
+          id: true,
+          durationMinutes: true,
+        },
+      },
+    },
+  });
+
+  if (!user) throw new AppError("Usuário não encontrado", 404);
+
+ const totalStudyMinutes = user.studySessions.reduce(
+    (acc, session) => acc + session.durationMinutes,
+    0
+  );
+
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    createdAt: user.createdAt,
+    avatarUrl: user.avatarUrl,
+
+    stats: {
+      totalStudyMinutes,
+      totalSessions: user.studySessions.length,
+      subjectsCount: user.subjects.length,
+    },
+  };
+}
+
+export async function updateMe(
+  userId: string,
+  data: {
+    name?: string;
+    email?: string;
+  },
+) {
+  const user = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+
+    data: {
+      name: data.name,
+      email: data.email,
+    },
+
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      createdAt: true,
+    },
+  });
+
+  return user;
+}
+
+export async function uploadAvatar(
+  userId: string,
+  avatarUrl: string,
+) {
+  const user = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+
+    data: {
+      avatarUrl,
+    },
+
     select: {
       id: true,
       name: true,
       email: true,
       avatarUrl: true,
-      createdAt: true,
     },
   });
-
-  if (!user) throw new AppError("Usuário não encontrado", 404);
 
   return user;
 }
