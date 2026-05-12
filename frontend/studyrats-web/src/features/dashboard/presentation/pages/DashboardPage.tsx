@@ -14,15 +14,9 @@ export function DashboardPage() {
         padding: 24,
       }}
     >
-      <h1
-        style={{
-          color: 'white',
-          fontSize: 20,
-          marginBottom: 20,
-        }}
-      >
-        Dashboard
-      </h1>
+      <h2 style={{ marginBottom: 16 }}>
+       📈 Dashboard
+      </h2>
 
       <div
         style={{

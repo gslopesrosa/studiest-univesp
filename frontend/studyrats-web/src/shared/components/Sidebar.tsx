@@ -1,5 +1,6 @@
 import { useAuth } from '@/features/auth/presentation/contexts/AuthContext'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { User } from 'lucide-react'
 
 export function Sidebar() {
   const { user, logout } = useAuth()
@@ -14,7 +15,7 @@ export function Sidebar() {
     <aside
       style={{
         width: 240,
-        height: '100vh',
+        height: '95vh',
         background: '#020617',
         borderRight: '1px solid #1e293b',
         display: 'flex',
@@ -48,11 +49,15 @@ export function Sidebar() {
         </div>
         <nav style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <NavLink to="/dashboard" style={linkStyle}>
-            🏠 Dashboard
+            📈 Dashboard
           </NavLink>
 
           <NavLink to="/subjects" style={linkStyle}>
             📚 Disciplinas
+          </NavLink>
+
+          <NavLink to="/sessions" style={linkStyle}>
+            📝 Registros
           </NavLink>
 
           <NavLink to="/sessions/new" style={ctaStyle}>
@@ -60,7 +65,33 @@ export function Sidebar() {
           </NavLink>
         </nav>
       </div>
-      <div>
+       <div
+        style={{
+          marginTop: 'auto',
+          borderTop: '1px solid #1e293b',
+          paddingTop: 16,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 8,
+        }}
+      >
+        <Link
+          to="/profile"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 12,
+            padding: '12px 16px',
+            borderRadius: 12,
+            color: 'white',
+            textDecoration: 'none',
+          }}
+        >
+          <User size={20} />
+
+          Perfil
+        </Link>
+        
          <button
           onClick={handleLogout}
           style={{

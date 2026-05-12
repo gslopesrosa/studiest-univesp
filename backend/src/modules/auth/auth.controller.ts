@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import * as authService from "./auth.service";
 import { registerSchema, loginSchema } from "./auth.schemas";
+import { uploadToCloudinary } from "../../middlewares/upload.middleware";
+import { AppError } from "../../utils/appError";
 
 export async function registerHandler(
   req: Request,
@@ -37,6 +39,49 @@ export async function meHandler(
 ) {
   try {
     const user = await authService.me(req.userId!);
+    res.json(user);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function updateMeHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const user = await authService.updateMe(
+      req.userId!,
+      req.body,
+    );
+
+    res.json(user);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function uploadAvatarHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    if (!req.file) {
+      throw new AppError("Imagem obrigatória", 400);
+    }
+
+    const imageUrl = await uploadToCloudinary(
+      req.file.buffer,
+      "avatars",
+    );
+
+    const user = await authService.uploadAvatar(
+      req.userId!,
+      imageUrl,
+    );
+
     res.json(user);
   } catch (err) {
     next(err);

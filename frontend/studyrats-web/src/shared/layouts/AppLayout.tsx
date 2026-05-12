@@ -6,9 +6,10 @@ export function AppLayout() {
     <div
       style={{
         display: 'flex',
-        minHeight: '100vh',
+        height: '100vh',
         background: '#020617',
         color: 'white',
+        overflow: 'hidden',
       }}
     >
       <Sidebar />
@@ -17,6 +18,7 @@ export function AppLayout() {
         style={{
           flex: 1,
           padding: 24,
+          overflowY: 'auto',
         }}
       >
         <Outlet />
