@@ -14,7 +14,7 @@ export async function getStreak(userId: string) {
     orderBy: { studyDate: "desc" },
   });
 
-  const days = getDistinctDays(rows.map((r) => r.studyDate));
+  const days = getDistinctDays(rows.map((r: any) => r.studyDate));
 
   return {
     current: calcCurrentStreak(days),
@@ -202,13 +202,13 @@ export async function getSubjectsRanking(userId: string, query: RankingQuery) {
   if (grouped.length === 0) return [];
 
   // busca os dados das disciplinas em uma única query
-  const subjectIds = grouped.map((g) => g.subjectId);
+  const subjectIds = grouped.map((g: any) => g.subjectId);
   const subjects = await prisma.subject.findMany({
     where: { id: { in: subjectIds } },
     select: { id: true, name: true, color: true },
   });
 
-  const subjectMap = new Map(subjects.map((s) => [s.id, s]));
+  const subjectMap = new Map(subjects.map((s: any) => [s.id, s]));
 
   return grouped.map((g, index) => ({
     rank: index + 1,

@@ -89,7 +89,7 @@ export async function me(userId: string) {
   if (!user) throw new AppError("Usuário não encontrado", 404);
 
  const totalStudyMinutes = user.studySessions.reduce(
-    (acc, session) => acc + session.durationMinutes,
+    (acc: number, session: any) => acc + session.durationMinutes,
     0
   );
 
