@@ -1,7 +1,7 @@
 import { tokenStorage } from '@/shared/infrastructure/storage/tokenStorage'
 
 export class ProfileApi {
-  private baseUrl = 'http://localhost:3333'
+  private baseUrl = import.meta.env.VITE_API_URL
 
   private getHeaders() {
     const token = tokenStorage.get()

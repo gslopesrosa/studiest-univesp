@@ -1,5 +1,6 @@
 import { api } from '@/shared/infrastructure/api/httpClient'
 import { tokenStorage } from '@/shared/infrastructure/storage/tokenStorage'
+import { API_URL } from '@/shared/config/api'
 
 export class StudySessionApi {
    async create(data: {
@@ -21,8 +22,7 @@ export class StudySessionApi {
   async getAll() {
   const token = tokenStorage.get()
 
-  const response = await fetch(
-    'http://localhost:3333/study-sessions',
+  const response = await fetch(`${API_URL}/study-sessions`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -45,7 +45,7 @@ export class StudySessionApi {
   formData.append('photo', photo)
 
   const response = await fetch(
-    `http://localhost:3333/study-sessions/${sessionId}/photos`,
+    `${API_URL}/study-sessions/${sessionId}/photos`,
     {
       method: 'POST',
       headers: {

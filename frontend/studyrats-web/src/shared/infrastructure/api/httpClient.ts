@@ -2,7 +2,7 @@ import axios from 'axios'
 import { tokenStorage } from '@/shared/infrastructure/storage/tokenStorage'
 
 export const api = axios.create({
-  baseURL: 'http://localhost:3333',
+  baseURL: import.meta.env.VITE_API_URL,
 })
 
 api.interceptors.request.use((config) => {

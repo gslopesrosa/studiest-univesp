@@ -34,7 +34,7 @@ export function RegisterForm() {
       </FormField>
       <FormField label="Senha">
         <Input
-          type="Senha"
+          type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
